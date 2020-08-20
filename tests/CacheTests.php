@@ -3,11 +3,10 @@
 use Gregwar\Cache\Cache;
 
 /**
- * Unit testing for Cache
+ * Unit testing for Cache.
  */
 class CacheTests extends \PHPUnit_Framework_TestCase
 {
-
     public function testContract()
     {
         $cache = $this->getCache();
@@ -15,7 +14,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing that file names are good
+     * Testing that file names are good.
      */
     public function testFileName()
     {
@@ -25,17 +24,17 @@ class CacheTests extends \PHPUnit_Framework_TestCase
         $actualCacheDir = $this->getActualCacheDirectory();
         $cacheFile = $cache->getCacheFile('helloworld.txt');
         $actualCacheFile = $cache->getCacheFile('helloworld.txt', true);
-        $this->assertEquals($cacheDir . '/h/e/l/l/o/helloworld.txt', $cacheFile);
-        $this->assertEquals($actualCacheDir . '/h/e/l/l/o/helloworld.txt', $actualCacheFile);
+        $this->assertEquals($cacheDir.'/h/e/l/l/o/helloworld.txt', $cacheFile);
+        $this->assertEquals($actualCacheDir.'/h/e/l/l/o/helloworld.txt', $actualCacheFile);
 
         $cacheFile = $cache->getCacheFile('xy.txt');
         $actualCacheFile = $cache->getCacheFile('xy.txt', true);
-        $this->assertEquals($cacheDir . '/x/y/xy.txt', $cacheFile);
-        $this->assertEquals($actualCacheDir . '/x/y/xy.txt', $actualCacheFile);
+        $this->assertEquals($cacheDir.'/x/y/xy.txt', $cacheFile);
+        $this->assertEquals($actualCacheDir.'/x/y/xy.txt', $actualCacheFile);
     }
 
     /**
-     * Testing caching a file
+     * Testing caching a file.
      */
     public function testCaching()
     {
@@ -44,25 +43,25 @@ class CacheTests extends \PHPUnit_Framework_TestCase
         $this->assertFalse($cache->exists('testing.txt'));
         $cache->set('testing.txt', 'toto');
         $this->assertTrue($cache->exists('testing.txt'));
-        
+
         $this->assertFalse($cache->exists('testing2.txt'));
         $cache->write('testing2.txt', 'toto');
         $this->assertTrue($cache->exists('testing2.txt'));
 
-        $this->assertFalse($cache->exists('testing.txt', array(
-            'max-age' => -1
-        )));
-        $this->assertTrue($cache->exists('testing.txt', array(
-            'max-age' => 2
-        )));
+        $this->assertFalse($cache->exists('testing.txt', [
+            'max-age' => -1,
+        ]));
+        $this->assertTrue($cache->exists('testing.txt', [
+            'max-age' => 2,
+        ]));
         sleep(3);
-        $this->assertFalse($cache->exists('testing.txt', array(
-            'max-age' => 2
-        )));
+        $this->assertFalse($cache->exists('testing.txt', [
+            'max-age' => 2,
+        ]));
     }
 
     /**
-     * Testing the getOrCreate function
+     * Testing the getOrCreate function.
      */
     public function testGetOrCreate()
     {
@@ -70,21 +69,21 @@ class CacheTests extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($cache->exists('testing.txt'));
 
-        $data = $cache->getOrCreate('testing.txt', array(), function() {
+        $data = $cache->getOrCreate('testing.txt', [], function () {
             return 'zebra';
         });
 
         $this->assertTrue($cache->exists('testing.txt'));
         $this->assertEquals('zebra', $data);
 
-        $data = $cache->getOrCreate('testing.txt', array(), function() {
+        $data = $cache->getOrCreate('testing.txt', [], function () {
             return 'elephant';
         });
         $this->assertEquals('zebra', $data);
     }
 
     /**
-     * Testing the getOrCreate function with a callable
+     * Testing the getOrCreate function with a callable.
      */
     public function testGetOrCreateWithCallable()
     {
@@ -92,7 +91,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($cache->exists('testing.txt'));
 
-        $data = $cache->getOrCreate('testing.txt', array(), array($this, 'getAnimal'));
+        $data = $cache->getOrCreate('testing.txt', [], [$this, 'getAnimal']);
 
         $this->assertTrue($cache->exists('testing.txt'));
         $this->assertEquals('orangutan', $data);
@@ -104,17 +103,17 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing the getOrCreate function with $file=true
+     * Testing the getOrCreate function with $file=true.
      */
     public function testGetOrCreateFile()
     {
         $dir = __DIR__;
         $cache = $this->getCache();
 
-        $file = $dir.'/'.$cache->getOrCreateFile('file.txt', array(), function() {
+        $file = $dir.'/'.$cache->getOrCreateFile('file.txt', [], function () {
             return 'xyz';
         });
-        $file2 = $dir.'/'.$cache->getOrCreate('file.txt', array(), function(){}, true);
+        $file2 = $dir.'/'.$cache->getOrCreate('file.txt', [], function () {}, true);
 
         $this->assertEquals($file, $file2);
         $this->assertTrue(file_exists($file));
@@ -122,13 +121,13 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing that the not existing younger file works
+     * Testing that the not existing younger file works.
      */
     public function testNotExistingYounger()
     {
         $cache = $this->getCache();
 
-        $data = $cache->getOrCreate('testing.txt', array('younger-than'=> 'i-dont-exist'), function() {
+        $data = $cache->getOrCreate('testing.txt', ['younger-than'=> 'i-dont-exist'], function () {
             return 'some-data';
         });
 
@@ -136,7 +135,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing that directory mode works
+     * Testing that directory mode works.
      */
     public function testDirectoryMode()
     {
@@ -145,7 +144,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
         $cacheDir = $this->getCacheDirectory();
 
         // default permissions are 0755
-        $data = $cache->getOrCreate('aaa.txt', array(), function () {
+        $data = $cache->getOrCreate('aaa.txt', [], function () {
             return 'abc';
         });
         $this->assertTrue((fileperms("$dir/$cacheDir/a") & 0777) == 0755);
@@ -154,7 +153,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
 
         // Change permissions to be more restrictive
         $cache->setDirectoryMode(0700);
-        $data = $cache->getOrCreate('bbb.txt', array(), function () {
+        $data = $cache->getOrCreate('bbb.txt', [], function () {
             return 'abc';
         });
         $this->assertTrue((fileperms("$dir/$cacheDir/b") & 0777) == 0700);
@@ -163,17 +162,17 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Testing that remotes does not cause cache regeneration
+     * Testing that remotes does not cause cache regeneration.
      */
     public function testRemote()
     {
         $cache = $this->getCache();
         $cache->set('remote', 'original');
 
-        $data = $cache->getOrCreate('remote', array('younger-than' => 'http://google.com'), function() {
+        $data = $cache->getOrCreate('remote', ['younger-than' => 'http://google.com'], function () {
             return 'modified';
         });
-        $data = $cache->getOrCreate('remote', array('younger-than' => 'ftps://google.com'), function() {
+        $data = $cache->getOrCreate('remote', ['younger-than' => 'ftps://google.com'], function () {
             return 'modified';
         });
         $this->assertEquals('original', $data);
@@ -181,13 +180,12 @@ class CacheTests extends \PHPUnit_Framework_TestCase
 
     protected function getCache()
     {
-        $cache = new Cache;
+        $cache = new Cache();
 
         return $cache
             ->setPrefixSize(5)
             ->setCacheDirectory($this->getCacheDirectory())
-            ->setActualCacheDirectory($this->getActualCacheDirectory())
-            ;
+            ->setActualCacheDirectory($this->getActualCacheDirectory());
     }
 
     protected function getActualCacheDirectory()

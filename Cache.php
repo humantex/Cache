@@ -3,45 +3,48 @@
 namespace Gregwar\Cache;
 
 /**
- * A cache system based on files
+ * A cache system based on files.
  *
  * @author Gregwar <g.passault@gmail.com>
  */
 class Cache implements CacheInterface
 {
     /**
-     * Cache directory
+     * Cache directory.
      */
     protected $cacheDirectory;
 
     /**
-     * Use a different directory as actual cache
+     * Use a different directory as actual cache.
+     *
      * @var string
      */
     protected $actualCacheDirectory = null;
 
     /**
-     * Prefix directories size
+     * Prefix directories size.
      *
      * For instance, if the file is helloworld.txt and the prefix size is
      * 5, the cache file will be: h/e/l/l/o/helloworld.txt
      *
      * This is useful to avoid reaching a too large number of files into the
      * cache system directories
+     *
      * @var int
      */
     protected $prefixSize = 5;
 
     /**
-     * Directory mode
+     * Directory mode.
      *
      * Allows setting of the access mode for the directories created.
+     *
      * @var int
      */
     protected $directoryMode = 0755;
 
     /**
-     * Constructs the cache system
+     * Constructs the cache system.
      *
      * @param string $cacheDirectory the cache directory
      */
@@ -51,9 +54,10 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Sets the cache directory
+     * Sets the cache directory.
      *
      * @param string $cacheDirectory the cache directory
+     *
      * @return self
      */
     public function setCacheDirectory($cacheDirectory)
@@ -64,7 +68,7 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Gets the cache directory
+     * Gets the cache directory.
      *
      * @return string the cache directory
      */
@@ -74,9 +78,10 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Sets the actual cache directory
+     * Sets the actual cache directory.
      *
      * @param string $actualCacheDirectory the actual cache directory
+     *
      * @return self
      */
     public function setActualCacheDirectory($actualCacheDirectory = null)
@@ -87,7 +92,7 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Returns the actual cache directory
+     * Returns the actual cache directory.
      */
     public function getActualCacheDirectory()
     {
@@ -95,9 +100,10 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Change the prefix size
+     * Change the prefix size.
      *
      * @param int $prefixSize the size of the prefix directories
+     *
      * @return self
      */
     public function setPrefixSize($prefixSize)
@@ -108,9 +114,10 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Change the directory mode
+     * Change the directory mode.
      *
      * @param int $directoryMode the directory mode to use
+     *
      * @return self
      */
     public function setDirectoryMode($directoryMode)
@@ -124,7 +131,7 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Creates a directory
+     * Creates a directory.
      *
      * @param string $directory the target directory
      */
@@ -136,51 +143,53 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Gets the cache file name
+     * Gets the cache file name.
      *
      * @param string $filename the name of the cache file
-     * @param bool $actual get the actual file or the public file
-     * @param bool $mkdir a boolean to enable/disable the construction of the
-     *        cache file directory
+     * @param bool   $actual   get the actual file or the public file
+     * @param bool   $mkdir    a boolean to enable/disable the construction of the
+     *                         cache file directory
+     *
      * @return string
      */
     public function getCacheFile($filename, $actual = false, $mkdir = false)
     {
-        $path = array();
+        $path = [];
 
         // Getting the length of the filename before the extension
         $parts = explode('.', $filename);
         $len = strlen($parts[0]);
 
-        for ($i=0; $i<min($len, $this->prefixSize); $i++) {
+        for ($i = 0; $i < min($len, $this->prefixSize); $i++) {
             $path[] = $filename[$i];
-
         }
         $path = implode('/', $path);
 
         if ($mkdir) {
-            $actualDir = $this->getActualCacheDirectory() . '/' . $path;
+            $actualDir = $this->getActualCacheDirectory().'/'.$path;
             $this->mkdir($actualDir);
         }
 
-        $path .= '/' . $filename;
+        $path .= '/'.$filename;
 
         if ($actual) {
-            return $this->getActualCacheDirectory() . '/' . $path;
+            return $this->getActualCacheDirectory().'/'.$path;
         } else {
-            return $this->getCacheDirectory() . '/' . $path;
+            return $this->getCacheDirectory().'/'.$path;
         }
     }
 
     /**
-     * Checks that the cache conditions are respected
+     * Checks that the cache conditions are respected.
      *
-     * @param string $cacheFile the cache file
-     * @param array $conditions an array of conditions to check
-     * @return bool
+     * @param string $cacheFile  the cache file
+     * @param array  $conditions an array of conditions to check
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
-    protected function checkConditions($cacheFile, array $conditions = array())
+    protected function checkConditions($cacheFile, array $conditions = [])
     {
         // Implicit condition: the cache file should exist
         if (!file_exists($cacheFile)) {
@@ -200,7 +209,7 @@ class Cache implements CacheInterface
             case 'younger-than':
             case 'youngerthan':
                 // Return false if the file is older than the file $value, or the files $value
-                $check = function($filename) use ($cacheFile) {
+                $check = function ($filename) use ($cacheFile) {
                     return !file_exists($filename) || filemtime($cacheFile) < filemtime($filename);
                 };
 
@@ -226,13 +235,14 @@ class Cache implements CacheInterface
 
     /**
      * Checks if the target filename exists in the cache and if the conditions
-     * are respected
+     * are respected.
      *
-     * @param string $filename the filename
-     * @param array $conditions the conditions to respect
+     * @param string $filename   the filename
+     * @param array  $conditions the conditions to respect
+     *
      * @return bool
      */
-    public function exists($filename, array $conditions = array())
+    public function exists($filename, array $conditions = [])
     {
         $cacheFile = $this->getCacheFile($filename, true);
 
@@ -240,22 +250,24 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Alias for exists
+     * Alias for exists.
      *
-     * @param string $filename the filename
-     * @param array $conditions the conditions to respect
+     * @param string $filename   the filename
+     * @param array  $conditions the conditions to respect
+     *
      * @return bool
      */
-    public function check($filename, array $conditions = array())
+    public function check($filename, array $conditions = [])
     {
         return $this->exists($filename, $conditions);
     }
 
     /**
-     * Write data in the cache
+     * Write data in the cache.
      *
      * @param string $filename the name of the cache file
      * @param string $contents the contents to store
+     *
      * @return self
      */
     public function set($filename, $contents = '')
@@ -268,10 +280,11 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Alias for set()
+     * Alias for set().
      *
      * @param string $filename the name of the cache file
      * @param string $contents the contents to store
+     *
      * @return self
      */
     public function write($filename, $contents = '')
@@ -280,13 +293,14 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Get data from the cache
+     * Get data from the cache.
      *
-     * @param string $filename the cache file name
-     * @param array $conditions
+     * @param string $filename   the cache file name
+     * @param array  $conditions
+     *
      * @return null|string
      */
-    public function get($filename, array $conditions = array())
+    public function get($filename, array $conditions = [])
     {
         if ($this->exists($filename, $conditions)) {
             return file_get_contents($this->getCacheFile($filename, true));
@@ -299,29 +313,32 @@ class Cache implements CacheInterface
      * Is this URL remote?
      *
      * @param string $file
+     *
      * @return bool
      */
     protected function isRemote($file)
     {
         if (preg_match('/^([a-z]+):\/\//', $file, $match)) {
-            return ($match[1] != 'file');
+            return $match[1] != 'file';
         }
 
         return false;
     }
 
     /**
-     * Get or create the cache entry
+     * Get or create the cache entry.
      *
-     * @param string $filename the cache file name
-     * @param array $conditions an array of conditions about expiration
-     * @param \Closure $function the closure to call if the file does not exist
-     * @param bool $file returns the cache file or the file contents
-     * @param bool $actual returns the actual cache file
-     * @return string
+     * @param string   $filename   the cache file name
+     * @param array    $conditions an array of conditions about expiration
+     * @param \Closure $function   the closure to call if the file does not exist
+     * @param bool     $file       returns the cache file or the file contents
+     * @param bool     $actual     returns the actual cache file
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
-    public function getOrCreate($filename, array $conditions = array(), $function, $file = false, $actual = false)
+    public function getOrCreate($filename, array $conditions = [], $function, $file = false, $actual = false)
     {
         if (!is_callable($function)) {
             throw new \InvalidArgumentException('The argument $function should be callable');
@@ -331,7 +348,7 @@ class Cache implements CacheInterface
         $data = null;
 
         if (!$this->check($filename, $conditions)) {
-            if(file_exists($cacheFile)) {
+            if (file_exists($cacheFile)) {
                 unlink($cacheFile);
             }
 
@@ -349,16 +366,18 @@ class Cache implements CacheInterface
     }
 
     /**
-     * Alias to getOrCreate with $file = true
+     * Alias to getOrCreate with $file = true.
      *
-     * @param string $filename the cache file name
-     * @param array $conditions an array of conditions about expiration
-     * @param \Closure $function the closure to call if the file does not exist
-     * @param bool $actual returns the actual cache file
-     * @return string
+     * @param string   $filename   the cache file name
+     * @param array    $conditions an array of conditions about expiration
+     * @param \Closure $function   the closure to call if the file does not exist
+     * @param bool     $actual     returns the actual cache file
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return string
      */
-    public function getOrCreateFile($filename, array $conditions = array(), $function, $actual = false)
+    public function getOrCreateFile($filename, array $conditions = [], $function, $actual = false)
     {
         return $this->getOrCreate($filename, $conditions, $function, true, $actual);
     }

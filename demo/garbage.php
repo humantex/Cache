@@ -1,6 +1,6 @@
 <?php
 
-include('../autoload.php'); // If using composer
+include '../autoload.php'; // If using composer
 
 use Gregwar\Cache\GarbageCollect;
 
@@ -11,4 +11,3 @@ if (!is_dir('cache')) {
 `touch cache/bar`;
 
 GarbageCollect::dropOldFiles(__DIR__.'/cache', 30, true);
-
