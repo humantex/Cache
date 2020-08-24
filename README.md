@@ -1,6 +1,6 @@
 Kache
 =====
-[![StyleCI](https://github.styleci.io/repos/289133258/shield?branch=master)](https://github.styleci.io/repos/289133258?branch=master) [![Build Status](https://travis-ci.org/humantex/Cache.svg?branch=master)](https://travis-ci.org/humantex/Cache)
+[![StyleCI](https://github.styleci.io/repos/289133258/shield?branch=master)](https://github.styleci.io/repos/289133258?branch=master) [![Build Status](https://travis-ci.org/humantex/Cache.svg?branch=master)](https://travis-ci.org/humantex/Kache)
 =====
 This is a lightweight cache system based on file and directories.
 
@@ -15,7 +15,7 @@ Via composer:
 ```json
 {
     "require": {
-        "gregwar/cache": "1.0.*"
+        "humantex/kache": "1.1.*"
     }
 }
 ```
@@ -23,13 +23,13 @@ Via composer:
 Or with a clone of the repository:
 
 ```bash
-git clone https://github.com/Gregwar/Cache.git
+git clone https://github.com/humantex/Kache.git
 ```
 
 Or downloading it:
 
-* [Download .zip](https://github.com/Gregwar/Cache/archive/master.zip)
-* [Download .tar.gz](https://github.com/Gregwar/Cache/archive/master.tar.gz)
+* [Download .zip](https://github.com/humantex/Kache/archive/master.zip)
+* [Download .tar.gz](https://github.com/humantex/Kache/archive/master.tar.gz)
 
 Step 2: Setup the rights
 ------------------------
@@ -38,7 +38,7 @@ You need your PHP script to have access to the cache directory, you can for inst
 create a `cache` directory (be sure the web server can write it):
 
 ```
-mkdir cache
+mkdir kache
 ```
 
 Step 3: Access the cache
@@ -51,7 +51,7 @@ To access the cache, you can do like this:
 
 include('vendor/autoload.php'); // If using composer
 
-use Gregwar\Cache\Cache;
+use humantex\Kache\Kache;
 
 $cache = new Cache;
 $cache->setCacheDirectory('cache'); // This is the default
@@ -114,7 +114,7 @@ For instance, if you want to uppercase a file:
 ```php
 <?php
 
-use Gregwar\Cache\Cache;
+use humantex\Kache\Kache;
 
 $cache = new Cache;
 
