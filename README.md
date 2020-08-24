@@ -4,6 +4,12 @@ Kache
 =====
 This is a lightweight cache system based on file and directories.
 
+### NOTE: This code is _not_ ready for use, while undergoing refactoring and testing
+
+This fork intends to keep the associated cache setting, processing, and management files from being excluded/ignored from online website backups via any control panel backup solution that filters for arbitrary directory names when they're labled "Cache" or "cache".
+
+This can be critical if/when the end user is not given control over the exclusion filters used during routinly scheduled or on-demand site backups. Site restores from these archives will be incomplete when these filters are applied globally and recursively, when no other method beyond name matching is used to identify directories and their contents. In these instances, they will be misidentified and mishandled as temporary files, and full site restorations will not be possible.
+
 Usage
 =====
 
