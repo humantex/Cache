@@ -1,6 +1,6 @@
 Kache
 =====
-[![StyleCI](https://github.styleci.io/repos/289133258/shield?branch=master)](https://github.styleci.io/repos/289133258?branch=master) [![Build Status](https://travis-ci.org/humantex/Cache.svg?branch=master)](https://travis-ci.org/humantex/Cache)
+[![StyleCI](https://github.styleci.io/repos/289133258/shield?branch=refactor)](https://github.styleci.io/repos/289133258?branch=refactor) [![Build Status](https://travis-ci.org/humantex/Cache.svg?branch=master)](https://travis-ci.org/humantex/Cache)
 =====
 This is a lightweight cache system based on file and directories.
 
