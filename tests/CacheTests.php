@@ -10,7 +10,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
     public function testContract()
     {
         $cache = $this->getCache();
-        $this->assertInstanceOf('Gregwar\Cache\CacheInterface', $cache);
+        $this->assertInstanceOf('humantex\Kache\CacheInterface', $cache);
     }
 
     /**
