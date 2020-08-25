@@ -2,9 +2,9 @@
 
 include '../autoload.php';
 
-use Gregwar\Cache\Cache;
+use humantex\Kache\Kache;
 
-$cache = new Cache();
+$cache = new Kache();
 
 $data = $cache->getOrCreate('uppercase.txt', ['younger-than' => 'original.txt'], function () {
     echo "Generating file...\n";

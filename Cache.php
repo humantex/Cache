@@ -1,13 +1,14 @@
 <?php
 
-namespace Gregwar\Cache;
+namespace humantex\Kache;
 
 /**
  * A cache system based on files.
  *
  * @author Gregwar <g.passault@gmail.com>
+ * @auther humantex <git.humantex@gmail.com>
  */
-class Cache implements CacheInterface
+class Kache implements CacheInterface
 {
     /**
      * Cache directory.

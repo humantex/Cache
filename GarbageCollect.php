@@ -1,12 +1,13 @@
 <?php
 
-namespace Gregwar\Cache;
+namespace humantex\Kache;
 
 /**
  * Garbage collect a directory, this will crawl a directory, lookng
  * for files older than X days and destroy them.
  *
  * @author Gregwar <g.passault@gmail.com>
+ * @auther humantex <git.humantex@gmail.com>
  */
 class GarbageCollect
 {

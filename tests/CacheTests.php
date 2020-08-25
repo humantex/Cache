@@ -1,6 +1,6 @@
 <?php
 
-use Gregwar\Cache\Cache;
+use humantex\Kache\Kache;
 
 /**
  * Unit testing for Cache.
@@ -180,7 +180,7 @@ class CacheTests extends \PHPUnit_Framework_TestCase
 
     protected function getCache()
     {
-        $cache = new Cache();
+        $cache = new Kache();
 
         return $cache
             ->setPrefixSize(5)

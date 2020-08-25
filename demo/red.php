@@ -2,9 +2,9 @@
 
 include '../autoload.php'; // If using composer
 
-use Gregwar\Cache\Cache;
+use humantex\Kache\Kache;
 
-$cache = new Cache();
+$cache = new Kache();
 $cache->setCacheDirectory('cache'); // This is the default
 
 // If the cache exists, this will return it, else, the closure will be called

@@ -2,7 +2,7 @@
 
 include '../autoload.php'; // If using composer
 
-use Gregwar\Cache\GarbageCollect;
+use humantex\Kache\GarbageCollect;
 
 if (!is_dir('cache')) {
     `mkdir cache`;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar\Cache;
+namespace humantex\Kache;
 
 interface CacheInterface
 {

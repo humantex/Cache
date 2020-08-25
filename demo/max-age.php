@@ -2,7 +2,7 @@
 
 include '../autoload.php';
 
-$cache = new Gregwar\Cache\Cache();
+$cache = new humantex\Kache\Kache();
 
 $data = $cache->getOrCreate('uppercase.txt', ['max-age' => 2], function () {
     echo "First call: generating file...\n";

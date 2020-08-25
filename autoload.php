@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Registers an autoload for all the classes in Gregwar\Cache.
+ * Registers an autoload for all the classes in humantex\Kache.
  */
 spl_autoload_register(function ($className) {
-    $namespace = 'Gregwar\\Cache';
+    $namespace = 'humantex\Kache';
 
     if (strpos($className, $namespace) === 0) {
         $className = str_replace($namespace, '', $className);

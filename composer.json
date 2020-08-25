@@ -1,21 +1,23 @@
 {
-    "name": "gregwar/cache",
+    "name": "humantex/kache",
     "description": "A lightweight file-system cache system",
     "keywords": ["cache", "caching", "system", "file-system"],
     "license": "MIT",
     "authors": [
         {
             "name": "Gregwar",
-            "email": "g.passault@gmail.com"
+            "email": "g.passault@gmail.com",
+            "name": "humantex",
+            "email": "git.humantex@gmail.com"
         }
     ],
-    "target-dir": "Gregwar/Cache",
+    "target-dir": "humantex/Kache",
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.6"
     },
     "autoload": {
         "psr-0": {
-            "Gregwar\\Cache": ""
+            "humantex\\Kache": ""
         }
     }
 }
