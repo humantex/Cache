@@ -59,7 +59,7 @@ include('vendor/autoload.php'); // If using composer
 
 use humantex\Kache\Kache;
 
-$cache = new Cache;
+$cache = new Kache;
 $cache->setCacheDirectory('cache'); // This is the default
 
 // If the cache exists, this will return it, else, the closure will be called
@@ -122,7 +122,7 @@ For instance, if you want to uppercase a file:
 
 use humantex\Kache\Kache;
 
-$cache = new Cache;
+$cache = new Kache;
 
 $data = $cache->getOrCreate('uppercase.txt',
     array(
